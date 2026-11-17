@@ -428,6 +428,57 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
     }
+
+    /* marimo에서 착안한 반응형 노트북 화면 */
+    :root {
+      --ink: #202924; --muted: #65746a; --subtle: #93a298;
+      --line: #dfe8df; --line-strong: #cad8cd; --paper: #fff;
+      --canvas: #f7faf7; --navy: #204d38; --navy-2: #286348;
+      --mint: #22a06b; --mint-soft: #e7f7ed;
+      --shadow: 0 2px 10px rgba(26, 63, 43, .035); --radius: 11px;
+    }
+    body { font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif; }
+    .sidebar { width: 206px; background: #fff; color: var(--ink); border-right: 1px solid var(--line); }
+    .brand { min-height: 68px; border-color: var(--line); }
+    .brand-mark { border: 0; background: #e8f7ee; color: #218b5a; }
+    .brand-kicker { color: #82988a; }
+    .nav-label { color: #9baaa0; }
+    .nav-link { color: #617469; }
+    .nav-link:hover, .nav-link.active { background: #e9f6ed; color: #225e3d; }
+    .nav-link.active::before { background: #31b47a; }
+    .sidebar-foot { border-color: var(--line); color: #718779; }
+    .source-link { color: #276b49; }
+    .main { margin-left: 206px; }
+    .topbar { min-height: 68px; background: rgba(255,255,255,.94); }
+    .content { max-width: 1500px; padding-top: 27px; }
+    .metric-card, .panel { box-shadow: var(--shadow); }
+    .metric-card::after { width: 4px; height: 100%; right: auto; left: 0; opacity: .8; }
+    .panel-badge { background: #edf7ef; color: #387451; }
+    .primary-button { background: #277a50; border-color: #277a50; }
+    .primary-button:hover { background: #1f6943; }
+    .quick-button.active, .page-button.active, .page-button:hover:not(:disabled) { background: #e7f6ec; border-color: #77c99c; color: #206440; }
+    .bar-fill { background: #65b78a; }
+    .note-hero { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 20px; padding: 26px 28px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .note-kicker { display: inline-flex; align-items: center; gap: 7px; color: #2c8a58; font-size: 11px; font-weight: 800; letter-spacing: .09em; }
+    .note-kicker::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #29b879; }
+    .note-hero h2 { margin: 8px 0 5px; font-size: clamp(22px,2.2vw,32px); letter-spacing: -.045em; }
+    .note-hero p { max-width: 640px; margin: 0; color: var(--muted); font-size: 13px; }
+    .note-meta { flex: 0 0 auto; color: var(--muted); font-size: 11px; text-align: right; }
+    .cell-heading { display: flex; align-items: center; gap: 10px; margin: 19px 0 10px; color: #53685a; font-size: 12px; font-weight: 750; }
+    .cell-heading::before { content: attr(data-cell); display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #cce5d3; border-radius: 7px; background: #eaf7ed; color: #298354; font: 700 11px Consolas, monospace; }
+    .cell-heading::after { content: ""; height: 1px; flex: 1; background: var(--line); }
+    .section-grid, .explorer, .compare-panel { margin-top: 0; }
+    .insights-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 12px; }
+    .insight-card { min-height: 138px; padding: 17px 18px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .insight-card .label { display: block; color: #708575; font-size: 11px; font-weight: 750; }
+    .insight-card strong { display: block; margin: 10px 0 5px; font-size: 18px; letter-spacing: -.035em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .insight-card p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .range-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 11px; }
+    .range-filters label { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 11px; font-weight: 700; }
+    .range-filters select { height: 32px; max-width: 160px; padding: 0 25px 0 8px; border: 1px solid var(--line-strong); border-radius: 7px; background: #fff; color: var(--ink); font-size: 11px; }
+    @media (max-width: 1180px) { .insights-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+    @media (max-width: 820px) { .main { margin-left: 0; } .note-hero { padding: 21px; } }
+    @media (max-width: 560px) { .note-hero { display: block; } .note-meta { margin-top: 14px; text-align: left; } .insights-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -457,7 +508,7 @@
       <div class="sidebar-foot">
         <div>DATA SOURCE</div>
         <a class="source-link" href="https://finance.naver.com/api/sise/etfItemList.nhn" target="_blank" rel="noreferrer">NAVER Finance ETF API ↗</a>
-        <p style="margin:8px 0 0">정보 제공 목적이며 투자 권유가 아닙니다.</p>
+        <p style="margin:8px 0 0">운용사·상품 유형은 종목명 기준 분류입니다. 정보 제공 목적이며 투자 권유가 아닙니다.</p>
       </div>
     </aside>
 
@@ -490,8 +541,14 @@
           <button id="noticeRetry" type="button">다시 시도</button>
         </div>
 
+        <section class="note-hero" aria-label="분석 노트 소개">
+          <div><span class="note-kicker">ETF RESEARCH NOTEBOOK</span><h2>ETF 시장을 탐색하는 노트</h2><p>조건을 바꾸면 요약, 차트, 분석 메모와 상품 목록이 함께 갱신됩니다. 네이버 금융의 최신 조회 데이터를 사용합니다.</p></div>
+          <div class="note-meta">DATA / NAVER FINANCE<br>REFRESH / <span id="heroRefresh">1 MIN</span></div>
+        </section>
+        <div class="cell-heading" data-cell="01">시장 요약 <span style="font-weight:400;color:var(--subtle)">· 현재 조회 조건</span></div>
+
         <section class="summary-grid" aria-label="ETF 시장 요약">
-          <article class="metric-card" style="--card-accent:#175cd3;--icon-bg:#eef4ff">
+          <article class="metric-card" style="--card-accent:#277a50;--icon-bg:#e9f6ed">
             <div class="metric-top"><span>상장 ETF</span><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5m0 14h16M8 16v-5m4 5V7m4 9v-3"/></svg></span></div>
             <div class="metric-value" id="totalCount">—</div>
             <div class="metric-foot" id="filteredCount">전체 종목 기준</div>
@@ -501,7 +558,7 @@
             <div class="metric-value" id="totalMarketCap">—</div>
             <div class="metric-foot">API 제공 시가총액 합산</div>
           </article>
-          <article class="metric-card" style="--card-accent:#7f56d9;--icon-bg:#f4f0ff">
+          <article class="metric-card" style="--card-accent:#67a985;--icon-bg:#edf8f0">
             <div class="metric-top"><span>총 거래대금</span><span class="metric-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 7h14M5 12h14M5 17h9"/></svg></span></div>
             <div class="metric-value" id="totalAmount">—</div>
             <div class="metric-foot">현재 조회 결과 합산</div>
@@ -513,6 +570,7 @@
           </article>
         </section>
 
+        <div class="cell-heading" data-cell="02">분포 분석</div>
         <section class="section-grid" aria-label="시장 분석 차트">
           <article class="panel" id="issuer-analysis">
             <div class="panel-head">
@@ -549,6 +607,10 @@
           </article>
         </section>
 
+        <div class="cell-heading" data-cell="03">분석 메모</div>
+        <section class="insights-grid" id="insightsGrid" aria-label="현재 조건의 분석 메모"></section>
+
+        <div class="cell-heading" data-cell="04">데이터 탐색</div>
         <section class="panel explorer" id="product-explorer">
           <div class="explorer-head">
             <div><h2 class="panel-title">ETF 상품 탐색</h2><p class="panel-subtitle">☆ 관심목록에 저장하거나 □ 최대 4개 상품을 비교할 수 있습니다.</p></div>
@@ -582,6 +644,11 @@
               <button class="quick-button" type="button" data-quick="threeMonth">3개월 수익률 상위</button>
               <button class="quick-button" type="button" data-quick="premium">NAV 괴리율 높은 순</button>
               <button class="secondary-button" type="button" id="showCompare">상품 비교 <span id="compareCount">0</span>/4</button>
+            </div>
+            <div class="range-filters" aria-label="수치 조건">
+              <label>최소 시가총액 <select id="minCapFilter"><option value="0">전체</option><option value="100">100억원 이상</option><option value="1000">1,000억원 이상</option><option value="10000">1조원 이상</option></select></label>
+              <label>3개월 수익률 <select id="returnFilter"><option value="">전체</option><option value="positive">0% 초과</option><option value="negative">0% 미만</option><option value="ten">10% 이상</option></select></label>
+              <label>NAV 괴리율 <select id="gapFilter"><option value="">전체</option><option value="half">절댓값 0.5% 이상</option><option value="one">절댓값 1% 이상</option></select></label>
             </div>
           </div>
 
@@ -658,7 +725,7 @@
         DAISHIN: '대신자산운용', DS: 'DS자산운용', TREX: '유리자산운용',
         TRUSTON: '트러스톤자산운용'
       };
-      const BAR_COLORS = ['#102a43', '#175cd3', '#12b886', '#7f56d9', '#f79009', '#d92d20', '#667085'];
+      const BAR_COLORS = ['#247b52', '#4ea976', '#72bb91', '#91cda7', '#a8d7b8', '#c2e4cb', '#d8ebdc'];
       const FAVORITES_KEY = 'etf-scope-favorites-v1';
       function loadFavorites() {
         try {
@@ -688,7 +755,9 @@
         detailDrawer: $('detailDrawer'), drawerBackdrop: $('drawerBackdrop'), drawerTitle: $('drawerTitle'),
         drawerBrand: $('drawerBrand'), drawerMeta: $('drawerMeta'), drawerBody: $('drawerBody'),
         favoritesOnly: $('favoritesOnly'), favoritesCount: $('favoritesCount'),
-        compareCount: $('compareCount'), comparePanel: $('comparePanel'), compareBody: $('compareBody')
+        compareCount: $('compareCount'), comparePanel: $('comparePanel'), compareBody: $('compareBody'),
+        minCapFilter: $('minCapFilter'), returnFilter: $('returnFilter'), gapFilter: $('gapFilter'),
+        insightsGrid: $('insightsGrid')
       };
 
       function escapeHtml(value) {
@@ -820,12 +889,19 @@
         const market = els.marketFilter.value;
         const type = els.typeFilter.value;
         const direction = els.directionFilter.value;
+        const minCap = Number(els.minCapFilter.value);
+        const returns = els.returnFilter.value;
+        const gap = els.gapFilter.value;
 
         state.filtered = state.items.filter((item) => {
           const matchesQuery = !query || `${item.itemname} ${item.itemcode} ${item.issuer}`.toLocaleLowerCase('ko').includes(query);
           return matchesQuery && (!issuer || item.issuer === issuer) && (!market || item.market === market) &&
             (!type || item.productType === type) && (!direction || item.direction === direction) &&
-            (!state.favoritesOnly || state.favorites.has(item.itemcode));
+            (!state.favoritesOnly || state.favorites.has(item.itemcode)) && item.marketSum >= minCap &&
+            (!returns || (returns === 'positive' && item.threeMonthEarnRate > 0) ||
+              (returns === 'negative' && item.threeMonthEarnRate < 0) ||
+              (returns === 'ten' && item.threeMonthEarnRate >= 10)) &&
+            (!gap || Math.abs(item.navGap) >= (gap === 'one' ? 1 : 0.5));
         });
         state.filtered.sort((a, b) => {
           const av = a[state.sortKey] ?? 0;
@@ -838,6 +914,7 @@
 
         renderSummary();
         renderCharts();
+        renderInsights();
         renderActiveFilters();
         renderTable();
         renderCompare();
@@ -923,6 +1000,29 @@
         els.flatCount.textContent = formatNumber(flat);
       }
 
+      function renderInsights() {
+        const data = state.filtered;
+        if (!data.length) {
+          els.insightsGrid.innerHTML = '<div class="insight-card" style="grid-column:1/-1"><span class="label">현재 조회 조건</span><strong>분석할 ETF가 없습니다</strong><p>필터를 조정하면 분석 메모가 다시 계산됩니다.</p></div>';
+          return;
+        }
+        const issuerGroups = groupBy(data, 'issuer', 'marketSum');
+        const topIssuer = issuerGroups[0];
+        const totalCap = sum(data, 'marketSum');
+        const mostTraded = [...data].sort((a, b) => b.amonut - a.amonut)[0];
+        const returns = data.map((item) => item.threeMonthEarnRate).filter((value) => Number.isFinite(value)).sort((a, b) => a - b);
+        const middle = Math.floor(returns.length / 2);
+        const median = returns.length % 2 ? returns[middle] : (returns[middle - 1] + returns[middle]) / 2;
+        const gapCount = data.filter((item) => Math.abs(item.navGap) >= 1).length;
+        const card = (label, value, note) => `<article class="insight-card"><span class="label">${label}</span><strong title="${escapeHtml(value)}">${escapeHtml(value)}</strong><p>${escapeHtml(note)}</p></article>`;
+        els.insightsGrid.innerHTML = [
+          card('규모 1위 운용사', topIssuer?.[0] || '—', `조회 시가총액의 ${totalCap ? (topIssuer[1] / totalCap * 100).toFixed(1) : '0.0'}%`),
+          card('거래대금 1위 ETF', mostTraded.itemname, formatAmount(mostTraded.amonut)),
+          card('3개월 수익률 중앙값', formatPercent(median), `${formatNumber(returns.length)}개 ETF의 중간값`),
+          card('NAV 괴리율 주의', `${formatNumber(gapCount)}개`, '절댓값 1% 이상 · 현재가와 NAV 기준')
+        ].join('');
+      }
+
       function renderActiveFilters() {
         const filters = [
           ['검색', els.searchInput.value.trim(), 'search'],
@@ -930,7 +1030,10 @@
           ['시장', els.marketFilter.value, 'market'],
           ['유형', els.typeFilter.value, 'type'],
           ['등락', ({ up: '상승', flat: '보합', down: '하락' })[els.directionFilter.value], 'direction'],
-          ['목록', state.favoritesOnly ? '관심목록' : '', 'favorites']
+          ['목록', state.favoritesOnly ? '관심목록' : '', 'favorites'],
+          ['최소 시가총액', els.minCapFilter.value !== '0' ? els.minCapFilter.selectedOptions[0]?.textContent : '', 'minCap'],
+          ['3개월 수익률', els.returnFilter.value ? els.returnFilter.selectedOptions[0]?.textContent : '', 'returns'],
+          ['NAV 괴리율', els.gapFilter.value ? els.gapFilter.selectedOptions[0]?.textContent : '', 'gap']
         ].filter(([, value]) => value);
         els.activeFilters.innerHTML = filters.length ? filters.map(([label, value, key]) => `
           <span class="filter-chip">${escapeHtml(label)}: ${escapeHtml(value)}<button type="button" data-clear="${key}" aria-label="${escapeHtml(label)} 필터 제거">×</button></span>`).join('') :
@@ -1080,6 +1183,9 @@
         els.marketFilter.value = '';
         els.typeFilter.value = '';
         els.directionFilter.value = '';
+        els.minCapFilter.value = '0';
+        els.returnFilter.value = '';
+        els.gapFilter.value = '';
         state.favoritesOnly = false;
         applyFilters();
       }
@@ -1087,12 +1193,13 @@
       function scheduleRefresh() {
         clearInterval(state.timer);
         const interval = Number(els.refreshInterval.value);
+        $('heroRefresh').textContent = ({ 30000: '30 SEC', 60000: '1 MIN', 300000: '5 MIN', 0: 'OFF' })[interval] || '1 MIN';
         if (interval > 0) state.timer = setInterval(() => { if (!document.hidden) loadData(); }, interval);
       }
 
       let debounceTimer;
       els.searchInput.addEventListener('input', () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => applyFilters(), 180); });
-      [els.issuerFilter, els.marketFilter, els.typeFilter, els.directionFilter].forEach((select) => select.addEventListener('change', () => applyFilters()));
+      [els.issuerFilter, els.marketFilter, els.typeFilter, els.directionFilter, els.minCapFilter, els.returnFilter, els.gapFilter].forEach((select) => select.addEventListener('change', () => applyFilters()));
       $('clearSearch').addEventListener('click', () => { els.searchInput.value = ''; applyFilters(); els.searchInput.focus(); });
       $('resetFilters').addEventListener('click', resetFilters);
       $('refreshBtn').addEventListener('click', loadData);
@@ -1133,6 +1240,9 @@
         if (key === 'type') els.typeFilter.value = '';
         if (key === 'direction') els.directionFilter.value = '';
         if (key === 'favorites') state.favoritesOnly = false;
+        if (key === 'minCap') els.minCapFilter.value = '0';
+        if (key === 'returns') els.returnFilter.value = '';
+        if (key === 'gap') els.gapFilter.value = '';
         applyFilters();
       });
 
